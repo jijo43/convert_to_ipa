@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 import epitran
 
 app = Flask(__name__)
@@ -6,13 +6,13 @@ app = Flask(__name__)
 # Initialize Epitran for English
 epi = epitran.Epitran('eng-Latn')
 
-@app.route('/convert', methods=['GET'])
+@app.route('/convert.py', methods=['GET'])
 def convert_text_to_ipa():
     text = request.args.get('text', '')
     if text:
         try:
             ipa = epi.transliterate(text)
-            return render_template('ipa_display.html', ipa=ipa)
+            return jsonify({'ipa': ipa}), 200
         except Exception as e:
             return jsonify({'error': str(e)}), 500
     else:

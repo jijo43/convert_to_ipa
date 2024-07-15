@@ -12,11 +12,17 @@ def convert_text_to_ipa():
     if text:
         try:
             ipa = epi.transliterate(text)
-            return jsonify({'ipa': ipa}), 200
+            response = jsonify({'ipa': ipa})
+            response.headers.add('Access-Control-Allow-Origin', '*') # Allow CORS
+            return response, 200
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            response = jsonify({'error': str(e)})
+            response.headers.add('Access-Control-Allow-Origin', '*') # Allow CORS
+            return response, 500
     else:
-        return jsonify({'error': 'Text parameter not found in request'}), 400
+        response = jsonify({'error': 'Text parameter not found in request'})
+        response.headers.add('Access-Control-Allow-Origin', '*') # Allow CORS
+        return response, 400
 
 if __name__ == '__main__':
     app.run(debug=True)

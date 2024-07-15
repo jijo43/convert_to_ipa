@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Initialize Epitran for English
 epi = epitran.Epitran('eng-Latn')
 
-@app.route('/convert', methods=['POST'])
+@app.route('/convert', methods=['GET'])
 def convert_text_to_ipa():
     if 'text' in request.form:
         text = request.form['text']

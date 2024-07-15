@@ -3,12 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPA Conversion Result</title>
+    <title>IPA Conversion</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>IPA Conversion Result</h1>
+    <h1>IPA Conversion Tool</h1>
     <div>
-        <p><strong>IPA Text:</strong> {{ ipa }}</p>
+        <label for="textInput">Enter Text:</label>
+        <input type="text" id="textInput" name="textInput">
+        <button onclick="convertToIPA()">Convert to IPA</button>
     </div>
+    <div id="ipaResult"></div>
+
+    <script>
+        function convertToIPA() {
+            var text = document.getElementById('textInput').value;
+            var url = `https://your-flask-app-url/convert.py?text=${encodeURIComponent(text)}`;
+
+            $.getJSON(url, function(data) {
+                if (data.ipa) {
+                    document.getElementById('ipaResult').innerHTML = `<p>IPA: ${data.ipa}</p>`;
+                } else {
+                    document.getElementById('ipaResult').innerHTML = `<p>Error: ${data.error}</p>`;
+                }
+            });
+        }
+    </script>
 </body>
 </html>
+

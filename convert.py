@@ -9,14 +9,11 @@ epi = epitran.Epitran('eng-Latn')
 @app.route('/')
 def index():
     text = request.args.get('text', '')
-    if text:
-        try:
-            ipa = epi.transliterate(text)
-            return f'IPA: {ipa}'
-        except Exception as e:
-            return f'Error: {str(e)}'
-    else:
-        return 'Text parameter not found in request'
+    try:
+        ipa = epi.transliterate(text)
+        return jsonify({'ipa': ipa}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

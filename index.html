@@ -20,9 +20,13 @@
             var url = `https://jijo43.github.io/convert_to_ipa/?text=${encodeURIComponent(text)}`;
 
             fetch(url)
-                .then(response => response.text())
+                .then(response => response.json())  // Assuming Python script returns JSON
                 .then(data => {
-                    document.getElementById('ipaResult').innerHTML = `<p>${data}</p>`;
+                    if (data.ipa) {
+                        document.getElementById('ipaResult').innerHTML = `<p>IPA: ${data.ipa}</p>`;
+                    } else {
+                        document.getElementById('ipaResult').innerHTML = `<p>Error: IPA not found in response.</p>`;
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);

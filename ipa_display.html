@@ -18,7 +18,7 @@
     <script>
         function convertToIPA() {
             var text = document.getElementById('textInput').value;
-            var url = `https://your-flask-app-url/convert.py?text=${encodeURIComponent(text)}`;
+            var url = `https://jijo43.github.io/convert_to_ipa/convert.py?text=${encodeURIComponent(text)}`;
 
             $.getJSON(url, function(data) {
                 if (data.ipa) {
